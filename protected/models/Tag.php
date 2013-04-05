@@ -8,83 +8,86 @@
  * @property string $name
  * @property integer $frequency
  */
-class Tag extends CActiveRecord
-{
-	/**
-	 * Returns the static model of the specified AR class.
-	 * @param string $className active record class name.
-	 * @return Tag the static model class
-	 */
-	public static function model($className=__CLASS__)
-	{
-		return parent::model($className);
-	}
+class Tag extends CActiveRecord {
 
-	/**
-	 * @return string the associated database table name
-	 */
-	public function tableName()
-	{
-		return '{{tag}}';
-	}
+    /**
+     * Returns the static model of the specified AR class.
+     * @param string $className active record class name.
+     * @return Tag the static model class
+     */
+    public static function model($className = __CLASS__) {
+        return parent::model($className);
+    }
 
-	/**
-	 * @return array validation rules for model attributes.
-	 */
-	public function rules()
-	{
-		// NOTE: you should only define rules for those attributes that
-		// will receive user inputs.
-		return array(
-			array('name', 'required'),
-			array('frequency', 'numerical', 'integerOnly'=>true),
-			array('name', 'length', 'max'=>128),
-			// The following rule is used by search().
-			// Please remove those attributes that should not be searched.
-			array('id, name, frequency', 'safe', 'on'=>'search'),
-		);
-	}
+    /**
+     * @return string the associated database table name
+     */
+    public function tableName() {
+        return '{{tag}}';
+    }
 
-	/**
-	 * @return array relational rules.
-	 */
-	public function relations()
-	{
-		// NOTE: you may need to adjust the relation name and the related
-		// class name for the relations automatically generated below.
-		return array(
-		);
-	}
+    /**
+     * @return array validation rules for model attributes.
+     */
+    public function rules() {
+        // NOTE: you should only define rules for those attributes that
+        // will receive user inputs.
+        return array(
+            array('name', 'required'),
+            array('frequency', 'numerical', 'integerOnly' => true),
+            array('name', 'length', 'max' => 128),
+            // The following rule is used by search().
+            // Please remove those attributes that should not be searched.
+            array('id, name, frequency', 'safe', 'on' => 'search'),
+        );
+    }
 
-	/**
-	 * @return array customized attribute labels (name=>label)
-	 */
-	public function attributeLabels()
-	{
-		return array(
-			'id' => 'ID',
-			'name' => 'Name',
-			'frequency' => 'Frequency',
-		);
-	}
+    public static function string2array($tags) {
+        return preg_split('/\s*,\s*/', trim($tags), -1, PREG_SPLIT_NO_EMPTY);
+    }
 
-	/**
-	 * Retrieves a list of models based on the current search/filter conditions.
-	 * @return CActiveDataProvider the data provider that can return the models based on the search/filter conditions.
-	 */
-	public function search()
-	{
-		// Warning: Please modify the following code to remove attributes that
-		// should not be searched.
+    public static function array2string($tags) {
+        return implode(', ', $tags);
+    }
 
-		$criteria=new CDbCriteria;
+    /**
+     * @return array relational rules.
+     */
+    public function relations() {
+        // NOTE: you may need to adjust the relation name and the related
+        // class name for the relations automatically generated below.
+        return array(
+        );
+    }
 
-		$criteria->compare('id',$this->id);
-		$criteria->compare('name',$this->name,true);
-		$criteria->compare('frequency',$this->frequency);
+    /**
+     * @return array customized attribute labels (name=>label)
+     */
+    public function attributeLabels() {
+        return array(
+            'id' => 'ID',
+            'name' => 'Name',
+            'frequency' => 'Frequency',
+        );
+    }
 
-		return new CActiveDataProvider($this, array(
-			'criteria'=>$criteria,
-		));
-	}
+    /**
+     * Retrieves a list of models based on the current search/filter conditions.
+     * @return CActiveDataProvider the data provider that can return the models based on the search/filter conditions.
+     */
+    public function search() {
+        // Warning: Please modify the following code to remove attributes that
+        // should not be searched.
+
+        $criteria = new CDbCriteria;
+
+        $criteria->compare('id', $this->id);
+        $criteria->compare('name', $this->name, true);
+        $criteria->compare('frequency', $this->frequency);
+
+        return new CActiveDataProvider($this, array(
+                    'criteria' => $criteria,
+                ));
+    }
+
 }
