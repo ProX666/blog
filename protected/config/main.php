@@ -20,7 +20,7 @@ return array(
 
 	'modules'=>array(
 		// uncomment the following to enable the Gii tool
-                // comment when on production machine!
+                // comment out again when on production machine!
 
 		'gii'=>array(
 			'class'=>'system.gii.GiiModule',
